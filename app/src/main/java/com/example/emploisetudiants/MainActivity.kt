@@ -9,6 +9,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.navigation.compose.composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,8 +36,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.example.emploisetudiants.ui.theme.EmploisEtudiantsTheme
 
 class MainActivity : ComponentActivity() {
@@ -44,7 +48,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             EmploisEtudiantsTheme {
-                Conversation(SampleData.conversationSample)
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = "loginScreen"
+                ) {
+                    composable("loginScreen") {
+                        Conversation(SampleData.conversationSample)
+                    }
+                    composable("CompanyListScreen") {
+                        MessageCard(msg = SampleData.conversationSample[0])
+                    }
+                }
             }
         }
     }
@@ -70,35 +85,42 @@ fun MessageCard(msg: Message) {
         // surfaceColor color will be changing gradually from primary to surface
         color = surfaceColor,
         // animateContentSize will change the Surface size gradually
-        modifier = Modifier.animateContentSize().padding(3.dp).fillMaxWidth()
+        modifier = Modifier
+            .animateContentSize()
+            .padding(3.dp)
+            .fillMaxWidth()
     ) {
-        Row(modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(R.drawable.profile_picture),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .border(1.5.dp, MaterialTheme.colorScheme.secondary, CircleShape)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                modifier = Modifier.padding(all = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.profile_picture),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .border(1.5.dp, MaterialTheme.colorScheme.secondary, CircleShape)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
 
-            Text(
-                text = msg.author,
-                modifier = Modifier.padding(all = 4.dp),
-                // If the message is expanded, we display all its content
-                // otherwise we only display the first line
-                maxLines = if (isExpanded) Int.MAX_VALUE else 1,
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Text(
-                text = msg.body,
-                modifier = Modifier.padding(all = 4.dp),
-                // If the message is expanded, we display all its content
-                // otherwise we only display the first line
-                maxLines = if (isExpanded) Int.MAX_VALUE else 1,
-                style = MaterialTheme.typography.bodyMedium
-            )
+                Text(
+                    text = msg.author,
+                    modifier = Modifier.padding(all = 4.dp),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                var offerNumber = msg.body
+                Text(
+                    text = "$offerNumber offres disponibles",
+                    modifier = Modifier.padding(all = 4.dp),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
             Icon(
                 imageVector = Icons.Default.ArrowDropDown,
                 contentDescription = null,
