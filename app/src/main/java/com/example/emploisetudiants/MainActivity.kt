@@ -2,6 +2,7 @@ package com.example.emploisetudiants
 
 import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
@@ -23,6 +24,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Icon
@@ -54,7 +56,18 @@ class MainActivity : ComponentActivity() {
                     startDestination = "loginScreen"
                 ) {
                     composable("loginScreen") {
-                        Conversation(SampleData.conversationSample)
+                        Column {
+                            Conversation(SampleData.conversationSample)
+                            Button(onClick = {
+                                navController.navigate("CompanyListScreen") {
+                                    popUpTo("login") {
+                                        inclusive = true
+                                    }
+                                }
+                            }) {
+                                Text(text = "Go to app")
+                            }
+                        }
                     }
                     composable("CompanyListScreen") {
                         MessageCard(msg = SampleData.conversationSample[0])
@@ -157,5 +170,30 @@ fun Conversation(messages: List<Message>) {
 fun PreviewConversation() {
     EmploisEtudiantsTheme {
         Conversation(SampleData.conversationSample)
+    }
+}
+
+@Composable
+fun LoginScreen() {
+    Text(text = "placeholder")
+}
+
+@Preview
+@Composable
+fun LoginScreenPreview() {
+    EmploisEtudiantsTheme {
+        val navController = rememberNavController()
+        Column {
+            LoginScreen()
+            Button(onClick = {
+                navController.navigate("CompanyListScreen") {
+                    popUpTo("login") {
+                        inclusive = true
+                    }
+                }
+            }) {
+                Text(text = "Go to app")
+            }
+        }
     }
 }
