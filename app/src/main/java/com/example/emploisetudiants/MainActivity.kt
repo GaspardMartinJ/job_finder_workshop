@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable("loginScreen") {
                         Column {
-                            Conversation(SampleData.conversationSample)
+                            LoginScreen()
                             Button(onClick = {
                                 navController.navigate("CompanyListScreen") {
                                     popUpTo("login") {
@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     composable("CompanyListScreen") {
-                        MessageCard(msg = SampleData.conversationSample[0])
+                        Conversation(messages = SampleData.conversationSample)
                     }
                 }
             }
