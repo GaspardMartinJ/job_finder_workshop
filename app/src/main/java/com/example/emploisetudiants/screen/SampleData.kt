@@ -1,4 +1,6 @@
-package com.example.emploisetudiants
+package com.example.emploisetudiants.screen
+
+import com.example.emploisetudiants.screen.Message
 
 object SampleData {
     // Sample conversation data
