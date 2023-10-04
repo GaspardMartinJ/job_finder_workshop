@@ -37,13 +37,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.emploisetudiants.Message
+import com.example.emploisetudiants.Offer
 import com.example.emploisetudiants.OfferList
 import com.example.emploisetudiants.R
+import com.example.emploisetudiants.SampleData
 import com.example.emploisetudiants.ui.theme.EmploisEtudiantsTheme
-
-data class Message(val author: String, val body: String)
-data class Offer(val title: String, val location: String, val salary: String, val contractType: String)
-
 
 @Composable
 fun MessageCard(msg: Message) {
@@ -109,7 +108,7 @@ fun MessageCard(msg: Message) {
         val offers = OfferList.offerListSample
         if (isExpanded) {
             offers.forEach { offer ->
-                com.example.emploisetudiants.OfferItem(offer)
+                OfferItem(offer)
             }
         }
     }
@@ -176,31 +175,6 @@ fun CompanyList(messages: List<Message>, navController: NavHostController) {
 @Composable
 fun PreviewConversation() {
     EmploisEtudiantsTheme {
-        com.example.emploisetudiants.Conversation(SampleData.conversationSample)
-    }
-}
-
-@Composable
-fun LoginScreen() {
-    Text(text = "placeholder", color = Color.White)
-}
-
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    EmploisEtudiantsTheme {
-        val navController = rememberNavController()
-        Column {
-            LoginScreen()
-            Button(onClick = {
-                navController.navigate("CompanyListScreen") {
-                    popUpTo("login") {
-                        inclusive = true
-                    }
-                }
-            }) {
-                Text(text = "Go to app")
-            }
-        }
+        CompanyList(SampleData.conversationSample, navController = rememberNavController())
     }
 }
