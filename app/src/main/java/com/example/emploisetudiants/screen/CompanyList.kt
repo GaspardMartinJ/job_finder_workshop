@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -45,10 +46,9 @@ import com.example.emploisetudiants.SampleData
 import com.example.emploisetudiants.ui.theme.EmploisEtudiantsTheme
 
 @Composable
-fun MessageCard(msg: Message) {
-    // We keep track if the message is expanded or not in this
-    // variable
-    var isExpanded by remember { mutableStateOf(true) }
+fun MessageCard(msg: Message, navController: NavHostController) {
+    // We keep track if the message is expanded or not in this variable
+    var isExpanded by remember { mutableStateOf(false) }
     // surfaceColor will be updated gradually from one color to the other
     val surfaceColor by animateColorAsState(
         if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
@@ -108,14 +108,14 @@ fun MessageCard(msg: Message) {
         val offers = OfferList.offerListSample
         if (isExpanded) {
             offers.forEach { offer ->
-                OfferItem(offer)
+                OfferItem(offer, navController)
             }
         }
     }
 }
 
 @Composable
-fun OfferItem(offer: Offer) {
+fun OfferItem(offer: Offer, navController: NavHostController) {
     Surface(
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 1.dp,
@@ -132,17 +132,11 @@ fun OfferItem(offer: Offer) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            /*
             Button(onClick = {
-                navController.navigate("CompanyListScreen") {
-                    popUpTo("login") {
-                        inclusive = true
-                    }
-                }
+                navController.navigate("OfferDetails/${offer.title}")
             }) {
                 Text(text = "Titre: ${offer.title}", fontWeight = FontWeight.Bold)
             }
-             */
             Text(text = "Lieu: ${offer.location}")
             Text(text = "Salaire: ${offer.salary}")
             Text(text = "Type de contrat: ${offer.contractType}")
@@ -156,7 +150,8 @@ fun PreviewMessageCard() {
     EmploisEtudiantsTheme {
         Surface {
             MessageCard(
-                msg = Message("Colleague", "Take a look at Jetpack Compose, it's great!\n test")
+                msg = Message("Colleague", "Take a look at Jetpack Compose, it's great!\n test"),
+                navController = rememberNavController()
             )
         }
     }
@@ -166,7 +161,7 @@ fun PreviewMessageCard() {
 fun CompanyList(messages: List<Message>, navController: NavHostController) {
     LazyColumn {
         items(messages) { message ->
-            MessageCard(message)
+            MessageCard(message, navController)
         }
     }
 }
