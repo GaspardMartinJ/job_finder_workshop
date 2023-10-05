@@ -65,4 +65,10 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    // database
+    implementation("mysql:mysql-connector-java:latest.release")
+    implementation("org.ktorm:ktorm-core:latest.release")
+    implementation("org.ktorm:ktorm-support-sqlserver:latest.release")
+    implementation("com.microsoft.sqlserver:mssql-jdbc:12.4.0.jre11")
 }

@@ -5,31 +5,28 @@ object SampleData {
     val conversationSample = listOf(
         Message(
             "Google",
-            "3"
+            "3",
+            "googlelogo",
         ),
         Message(
             "Le vieux campeur",
-            "5"
+            "5",
+            "lvclogo",
         ),
         Message(
             "STmicroelectronics",
-            "2"
+            "2",
+            "stlogo",
         ),
         Message(
             "Carrefour",
-            "2000"
+            "10",
+            "carrefourlogo",
         ),
         Message(
-            "MacDo",
-            "0"
-        ),
-        Message(
-            "Test",
-            "1"
-        ),
-        Message(
-            "Colleague",
-            "7"
+            "McDo",
+            "0",
+            "macdologo",
         ),
     )
 }

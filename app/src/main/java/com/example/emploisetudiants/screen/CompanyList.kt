@@ -32,10 +32,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.emploisetudiants.Message
@@ -75,8 +78,16 @@ fun MessageCard(msg: Message, navController: NavHostController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    val context = LocalContext.current
+                    val drawableId = remember(msg.logo) {
+                        context.resources.getIdentifier(
+                            msg.logo,
+                            "drawable",
+                            context.packageName
+                        )
+                    }
                     Image(
-                        painter = painterResource(R.drawable.profile_picture),
+                        painter = painterResource(drawableId),
                         contentDescription = null,
                         modifier = Modifier
                             .size(40.dp)
@@ -144,24 +155,18 @@ fun OfferItem(offer: Offer, navController: NavHostController) {
     }
 }
 
-@Preview
-@Composable
-fun PreviewMessageCard() {
-    EmploisEtudiantsTheme {
-        Surface {
-            MessageCard(
-                msg = Message("Colleague", "Take a look at Jetpack Compose, it's great!\n test"),
-                navController = rememberNavController()
-            )
-        }
-    }
-}
-
 @Composable
 fun CompanyList(messages: List<Message>, navController: NavHostController) {
-    LazyColumn {
-        items(messages) { message ->
-            MessageCard(message, navController)
+    Column (horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = "Liste des entreprises",
+            modifier = Modifier.padding(bottom = 10.dp),
+            fontSize = 30.sp
+        )
+        LazyColumn {
+            items(messages) { message ->
+                MessageCard(message, navController)
+            }
         }
     }
 }
@@ -170,6 +175,9 @@ fun CompanyList(messages: List<Message>, navController: NavHostController) {
 @Composable
 fun PreviewConversation() {
     EmploisEtudiantsTheme {
-        CompanyList(SampleData.conversationSample, navController = rememberNavController())
+        Column (horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Liste des entreprises", modifier = Modifier.padding(bottom = 10.dp), fontSize = 30.sp)
+            CompanyList(SampleData.conversationSample, navController = rememberNavController())
+        }
     }
 }

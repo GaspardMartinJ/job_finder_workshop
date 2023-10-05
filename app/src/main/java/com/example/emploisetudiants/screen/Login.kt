@@ -1,11 +1,15 @@
 package com.example.emploisetudiants.screen
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -14,6 +18,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -25,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.emploisetudiants.R
 import com.example.emploisetudiants.Routes
 import com.example.emploisetudiants.ui.theme.PurpleGrey40
 
@@ -55,7 +62,12 @@ fun LoginPage(navController: NavHostController) {
         val username = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
 
-        Text(text = "Login", style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
+        Image(
+            painter = painterResource(R.drawable.logo2),
+            contentDescription = null,
+            modifier = Modifier
+                .size(200.dp)
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
@@ -113,7 +125,12 @@ fun LoginPage() {
         val username = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
 
-        Text(text = "Login", style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
+        Image(
+            painter = painterResource(R.drawable.logo2),
+            contentDescription = null,
+            modifier = Modifier
+                .size(200.dp)
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
